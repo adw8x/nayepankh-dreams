@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Contact — NayePankh Foundation</title>
+<meta name="description" content="Get in touch with NayePankh Foundation — we reply within 24 hours." />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="nav-host"></div>
+<main style="padding-top:0">
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Get in Touch</h1>
+      <p>Questions, partnerships, press — we'd love to hear from you.</p>
+      <div class="breadcrumb"><a href="index.html">Home</a> / Contact</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container contact-grid">
+      <div data-reveal>
+        <div class="card" style="padding:30px">
+          <h3 style="margin-bottom:18px">Send us a message</h3>
+          <form id="contactForm" novalidate>
+            <div class="float-field">
+              <input id="cName" name="name" type="text" required placeholder=" ">
+              <label for="cName">Full Name</label>
+            </div>
+            <div class="float-field">
+              <input id="cEmail" name="email" type="email" required placeholder=" ">
+              <label for="cEmail">Email</label>
+            </div>
+            <div class="float-field">
+              <input id="cPhone" name="phone" type="tel" required placeholder=" ">
+              <label for="cPhone">Phone</label>
+            </div>
+            <div class="float-field">
+              <select id="cSubject" name="subject" required>
+                <option value="" disabled selected hidden></option>
+                <option>General Inquiry</option>
+                <option>Volunteer</option>
+                <option>Donation</option>
+                <option>Partnership</option>
+                <option>Press</option>
+              </select>
+              <label for="cSubject">Subject</label>
+            </div>
+            <div class="float-field">
+              <textarea id="cMsg" name="message" required rows="5" placeholder=" "></textarea>
+              <label for="cMsg">Message</label>
+            </div>
+            <button class="btn btn-accent" type="submit" id="cSubmit" style="width:100%">Send Message</button>
+          </form>
+        </div>
+      </div>
+
+      <div data-reveal>
+        <div class="info-card">
+          <div class="info-row" onclick="copyText('123 Hope Street, New Delhi 110001')">
+            <span class="ic">📍</span>
+            <div><strong>Address</strong><div style="color:var(--text-soft);font-size:.92rem">123 Hope Street, New Delhi 110001, India</div></div>
+          </div>
+          <div class="info-row" onclick="copyText('hello@nayepankh.org')">
+            <span class="ic">📧</span>
+            <div><strong>Email</strong><div style="color:var(--text-soft);font-size:.92rem">hello@nayepankh.org <em style="font-size:.8rem">(click to copy)</em></div></div>
+          </div>
+          <div class="info-row" onclick="copyText('+91 11 4000 1234')">
+            <span class="ic">📞</span>
+            <div><strong>Phone</strong><div style="color:var(--text-soft);font-size:.92rem">+91 11 4000 1234</div></div>
+          </div>
+          <span class="badge success" style="margin-top:6px">⏱ We respond within 24 hours</span>
+          <div class="socials" style="margin-top:18px">
+            <a href="#">f</a><a href="#">𝕏</a><a href="#">◐</a><a href="#">in</a>
+          </div>
+        </div>
+        <div class="map-box">
+          <iframe loading="lazy" allowfullscreen
+            src="https://www.google.com/maps?q=India%20Gate%20New%20Delhi&output=embed"></iframe>
+        </div>
+        <a class="btn btn-outline" style="margin-top:12px;width:100%" href="https://maps.google.com/?q=India+Gate+New+Delhi" target="_blank">View on Google Maps ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--bg-alt)">
+    <div class="container">
+      <h2 class="section-title" data-reveal>Frequently asked</h2>
+      <div class="faq" id="faq">
+        <div class="faq-item"><button class="faq-q">How can I volunteer? <span class="arrow">▾</span></button><div class="faq-a"><p>Head to the Volunteer page, complete the 3-step form, and we'll match you with a program within 48 hours.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Where do my donations go? <span class="arrow">▾</span></button><div class="faq-a"><p>92% of every rupee goes directly to programs. The remaining 8% covers operations and is fully audited annually.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Do I get a tax receipt? <span class="arrow">▾</span></button><div class="faq-a"><p>Yes. NayePankh is registered under 80G and 12A. Receipts are emailed within 48 hours of donation.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Can my company partner with you? <span class="arrow">▾</span></button><div class="faq-a"><p>Absolutely. Drop us a note at partnerships@nayepankh.org and we'll set up a call within a week.</p></div></div>
+        <div class="faq-item"><button class="faq-q">Do you work outside India? <span class="arrow">▾</span></button><div class="faq-a"><p>For now, all our programs run in India. We welcome international volunteers and mentors who can work remotely.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<div id="footer-host"></div>
+<script src="main.js"></script>
+<script>
+function copyText(t){ navigator.clipboard.writeText(t).then(()=>showToast("Copied: "+t,"info")); }
+
+function pageInit(){
+  // Live validation
+  document.querySelectorAll("#contactForm input, #contactForm select, #contactForm textarea").forEach(el=>{
+    el.addEventListener("input",()=>{
+      const wrap = el.closest(".float-field");
+      if(el.checkValidity() && el.value.trim()){
+        wrap.classList.add("valid");
+        if(!wrap.querySelector(".ok")){
+          const ok=document.createElement("span"); ok.className="ok";ok.textContent="✓";
+          ok.style.cssText="position:absolute;right:14px;top:18px;color:var(--success);font-weight:700";
+          wrap.appendChild(ok);
+        }
+      } else {
+        wrap.classList.remove("valid");
+        const ok = wrap.querySelector(".ok"); if(ok) ok.remove();
+      }
+    });
+  });
+
+  document.getElementById("contactForm").addEventListener("submit",e=>{
+    e.preventDefault();
+    const f = e.target;
+    let ok=true;
+    [...f.elements].forEach(el=>{
+      if(el.tagName==="BUTTON") return;
+      const wrap = el.closest(".float-field");
+      if(!el.checkValidity()){ wrap.style.animation="shake .3s"; setTimeout(()=>wrap.style.animation="",300); ok=false; }
+    });
+    if(!ok){ showToast("Please fix the highlighted fields","error"); return; }
+    const btn = document.getElementById("cSubmit");
+    const original = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spinner"></span> Sending...`;
+    setTimeout(()=>{
+      const data = Object.fromEntries(new FormData(f).entries());
+      data.submittedAt = new Date().toISOString();
+      const all = JSON.parse(localStorage.getItem("np_contacts")||"[]");
+      all.push(data); localStorage.setItem("np_contacts",JSON.stringify(all));
+      btn.disabled = false; btn.innerHTML = original;
+      f.reset();
+      f.querySelectorAll(".float-field").forEach(w=>{w.classList.remove("valid"); const ok=w.querySelector(".ok"); if(ok) ok.remove();});
+      showToast("Message sent! We'll reply within 24 hours. 🙏");
+    },1500);
+  });
+
+  // FAQ accordion (one at a time)
+  document.querySelectorAll("#faq .faq-q").forEach(q=>{
+    q.addEventListener("click",()=>{
+      const item = q.parentElement;
+      const open = item.classList.contains("open");
+      document.querySelectorAll("#faq .faq-item").forEach(i=>i.classList.remove("open"));
+      if(!open) item.classList.add("open");
+    });
+  });
+}
+</script>
+</body>
+</html>
