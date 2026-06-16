@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Programs — NayePankh Foundation</title>
+<meta name="description" content="Six flagship programs across education, digital, career, arts, health and women empowerment." />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="nav-host"></div>
+<main style="padding-top:0">
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Our Programs</h1>
+      <p>Six flagship initiatives. One mission — to give wings to dreams.</p>
+      <div class="breadcrumb"><a href="index.html">Home</a> / Programs</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="filter-bar">
+        <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search programs (try 'digital', 'women', 'arts'...)" />
+        <div class="filter-buttons" id="filterButtons">
+          <button class="chip active" data-cat="All">All</button>
+          <button class="chip" data-cat="Education">Education</button>
+          <button class="chip" data-cat="Digital">Digital</button>
+          <button class="chip" data-cat="Career">Career</button>
+          <button class="chip" data-cat="Arts">Arts</button>
+          <button class="chip" data-cat="Health">Health</button>
+          <button class="chip" data-cat="Women">Women</button>
+        </div>
+      </div>
+      <div class="result-count" id="resultCount">Showing 6 of 6 programs</div>
+      <div class="cards-grid" id="programGrid"></div>
+    </div>
+  </section>
+
+</main>
+<div id="footer-host"></div>
+<script src="main.js"></script>
+<script>
+const PROGRAMS = [
+  {icon:"📚",title:"Academic Support",cat:"Education",desc:"After-school tuition, homework help and exam prep for students from grades 5-12.",stat:"5,000+ students enrolled"},
+  {icon:"💻",title:"Digital Literacy",cat:"Digital",desc:"Computer basics, internet safety and intro to coding for first-time learners.",stat:"40 computer labs across India"},
+  {icon:"🌱",title:"Career Mentorship",cat:"Career",desc:"1-on-1 mentorship with professionals across tech, design, finance and more.",stat:"800+ mentor pairings"},
+  {icon:"🎨",title:"Creative Arts",cat:"Arts",desc:"Music, dance, painting and storytelling — because expression is education too.",stat:"12 community art studios"},
+  {icon:"🏥",title:"Health Awareness",cat:"Health",desc:"Nutrition, hygiene, mental health and adolescent wellness workshops.",stat:"3,200+ workshops delivered"},
+  {icon:"👩‍💼",title:"Women Empowerment",cat:"Women",desc:"Skill-building, leadership and entrepreneurship for young women.",stat:"1,500+ women trained"},
+];
+
+let activeCat = "All";
+let query = "";
+
+function getParams(){
+  const p = new URLSearchParams(location.search);
+  if(p.get("category")) activeCat = p.get("category");
+  if(p.get("q")) query = p.get("q");
+}
+function updateUrl(){
+  const p = new URLSearchParams();
+  if(activeCat!=="All") p.set("category",activeCat);
+  if(query) p.set("q",query);
+  const s = p.toString();
+  history.replaceState(null,"", s? "?"+s : location.pathname);
+}
+
+function render(){
+  const grid = document.getElementById("programGrid");
+  const q = query.trim().toLowerCase();
+  const list = PROGRAMS.filter(p=>{
+    const matchCat = activeCat==="All" || p.cat===activeCat;
+    const matchQ = !q || (p.title+" "+p.desc+" "+p.cat).toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+  document.getElementById("resultCount").textContent = `Showing ${list.length} of ${PROGRAMS.length} programs`;
+  grid.innerHTML = list.map(p=>`
+    <div class="card program-card" data-cat="${p.cat}" data-reveal>
+      <div class="icon">${p.icon}</div>
+      <span class="badge ${p.cat==='Digital'||p.cat==='Arts'?'accent':p.cat==='Career'||p.cat==='Women'?'success':''}">${p.cat}</span>
+      <h3>${p.title}</h3>
+      <p>${p.desc}</p>
+      <div class="impact-stat">📈 ${p.stat}</div>
+      <button class="btn btn-accent" onclick="registerInterest('${p.title}')">Register Interest</button>
+    </div>
+  `).join("") || `<p style="text-align:center;color:var(--text-soft);padding:40px">No programs match your search.</p>`;
+  document.querySelectorAll("[data-reveal]").forEach(el=>el.classList.add("visible"));
+}
+
+function registerInterest(name){
+  openModal(`
+    <h3>Register Interest — ${name}</h3>
+    <p style="color:var(--text-soft);margin-bottom:16px">We'll be in touch within 24 hours.</p>
+    <form id="interestForm">
+      <div class="field"><label>Full Name</label><input required name="name" placeholder="Your name"><span class="err">Required</span></div>
+      <div class="field"><label>Email</label><input required type="email" name="email" placeholder="you@email.com"><span class="err">Valid email required</span></div>
+      <div class="field"><label>Phone</label><input required type="tel" name="phone" placeholder="+91 ..."><span class="err">Required</span></div>
+      <div class="field"><label>City</label><input required name="city" placeholder="Your city"><span class="err">Required</span></div>
+      <button type="submit" class="btn btn-accent" style="width:100%;margin-top:10px">Submit</button>
+    </form>
+  `);
+  setTimeout(()=>{
+    const f = document.getElementById("interestForm");
+    f.addEventListener("submit",e=>{
+      e.preventDefault();
+      let ok=true;
+      [...f.elements].forEach(el=>{
+        if(el.tagName!=="INPUT") return;
+        const field = el.closest(".field");
+        const valid = el.checkValidity();
+        field.classList.toggle("invalid",!valid);
+        if(!valid) ok=false;
+      });
+      if(!ok) return;
+      closeModal();
+      showToast("Thank you! We'll reach out shortly. 🙏");
+    });
+  },50);
+}
+
+function pageInit(){
+  getParams();
+  document.getElementById("searchInput").value = query;
+  document.querySelectorAll("#filterButtons .chip").forEach(b=>{
+    if(b.dataset.cat===activeCat) b.classList.add("active"); else b.classList.remove("active");
+    b.addEventListener("click",()=>{
+      document.querySelectorAll("#filterButtons .chip").forEach(x=>x.classList.remove("active"));
+      b.classList.add("active");
+      activeCat = b.dataset.cat;
+      updateUrl(); render();
+    });
+  });
+  let debounce;
+  document.getElementById("searchInput").addEventListener("input",e=>{
+    clearTimeout(debounce);
+    debounce = setTimeout(()=>{ query = e.target.value; updateUrl(); render(); },300);
+  });
+  render();
+}
+</script>
+</body>
+</html>
