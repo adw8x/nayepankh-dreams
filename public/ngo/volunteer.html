@@ -73,11 +73,22 @@
             <h3>Availability</h3>
             <label style="display:block;margin-bottom:8px;font-weight:600">Programs you're interested in</label>
             <div class="chk-grid" id="progChk">
-              ${["Academic Support","Digital Literacy","Career Mentorship","Creative Arts","Health Awareness","Women Empowerment"].map(p=>`<label class="chk"><input type="checkbox" value="${p}"> ${p}</label>`).join("")}
+              <label class="chk"><input type="checkbox" value="Academic Support"> Academic Support</label>
+              <label class="chk"><input type="checkbox" value="Digital Literacy"> Digital Literacy</label>
+              <label class="chk"><input type="checkbox" value="Career Mentorship"> Career Mentorship</label>
+              <label class="chk"><input type="checkbox" value="Creative Arts"> Creative Arts</label>
+              <label class="chk"><input type="checkbox" value="Health Awareness"> Health Awareness</label>
+              <label class="chk"><input type="checkbox" value="Women Empowerment"> Women Empowerment</label>
             </div>
             <label style="display:block;margin:18px 0 8px;font-weight:600">Days available</label>
             <div class="toggle-group" id="dayGroup">
-              ${["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d=>`<button type="button" data-day="${d}">${d}</button>`).join("")}
+              <button type="button" data-day="Mon">Mon</button>
+              <button type="button" data-day="Tue">Tue</button>
+              <button type="button" data-day="Wed">Wed</button>
+              <button type="button" data-day="Thu">Thu</button>
+              <button type="button" data-day="Fri">Fri</button>
+              <button type="button" data-day="Sat">Sat</button>
+              <button type="button" data-day="Sun">Sun</button>
             </div>
             <label style="display:block;margin:18px 0 8px;font-weight:600">Hours per week</label>
             <div class="range-row">
