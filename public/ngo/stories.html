@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Stories — NayePankh Foundation</title>
+<meta name="description" content="Stories of change from the youth, families and mentors of NayePankh Foundation." />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="nav-host"></div>
+<main style="padding-top:0">
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Stories of Change</h1>
+      <p>Real lives. Real wings. Real flights.</p>
+      <div class="breadcrumb"><a href="index.html">Home</a> / Stories</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="filter-bar">
+        <input type="text" id="storySearch" class="search-input" placeholder="🔍 Search stories by name, place or topic..." />
+        <div class="filter-buttons" id="storyFilters">
+          <button class="chip active" data-cat="All">All</button>
+          <button class="chip" data-cat="Education">Education</button>
+          <button class="chip" data-cat="Health">Health</button>
+          <button class="chip" data-cat="Career">Career</button>
+          <button class="chip" data-cat="Arts">Arts</button>
+        </div>
+      </div>
+
+      <div id="featuredHost"></div>
+      <div class="cards-grid" id="storiesGrid"></div>
+    </div>
+  </section>
+
+</main>
+<div id="footer-host"></div>
+<script src="main.js"></script>
+<script>
+const STORIES = [
+  {id:1,featured:true,cat:"Education",title:"From Slum to Scholarship",author:"Priya M.",date:"Jun 2026",read:"5 min",excerpt:"Priya turned a borrowed textbook into a national merit scholarship.",grad:"linear-gradient(135deg,#1565c0,#e65100)"},
+  {id:2,cat:"Career",title:"India's First Coder in His Village",author:"Arjun K.",date:"May 2026",read:"4 min",excerpt:"Arjun built an app helping farmers track monsoons.",grad:"linear-gradient(135deg,#2e7d32,#1565c0)"},
+  {id:3,cat:"Arts",title:"The Painter of Pune",author:"Meera S.",date:"Apr 2026",read:"6 min",excerpt:"Meera's art now hangs in three galleries, and she trains 40 girls.",grad:"linear-gradient(135deg,#ad1457,#6a1b9a)"},
+  {id:4,cat:"Health",title:"Breaking the Silence on Mental Health",author:"Kabir J.",date:"Mar 2026",read:"5 min",excerpt:"Kabir runs peer-led wellness circles in his school.",grad:"linear-gradient(135deg,#0d47a1,#c62828)"},
+  {id:5,cat:"Education",title:"The First Graduate in My Family",author:"Anjali R.",date:"Feb 2026",read:"4 min",excerpt:"Anjali walked the convocation stage with her mother in the audience.",grad:"linear-gradient(135deg,#e65100,#ad1457)"},
+  {id:6,cat:"Career",title:"From Tea Stall to Tech Internship",author:"Rohan T.",date:"Jan 2026",read:"5 min",excerpt:"Rohan landed his first paid internship — at 18.",grad:"linear-gradient(135deg,#2e7d32,#e65100)"},
+];
+
+let cat="All",q="";
+
+function render(){
+  const list = STORIES.filter(s=>{
+    const mc = cat==="All"||s.cat===cat;
+    const ml = !q || (s.title+s.author+s.excerpt+s.cat).toLowerCase().includes(q.toLowerCase());
+    return mc && ml;
+  });
+  const featured = list.find(s=>s.featured) || list[0];
+  const rest = list.filter(s=>s!==featured);
+
+  document.getElementById("featuredHost").innerHTML = featured ? `
+    <div class="featured-story" onclick="openStory(${featured.id})" style="cursor:pointer" data-reveal>
+      <div class="img" style="background:${featured.grad}"></div>
+      <div>
+        <span class="badge accent">Featured · ${featured.cat}</span>
+        <h2>${featured.title}</h2>
+        <p style="color:var(--text-soft)">${featured.excerpt}</p>
+        <div class="meta" style="display:flex;gap:12px;color:var(--text-soft);font-size:.85rem;margin-top:10px"><span>${featured.author}</span><span>${featured.date}</span><span>${featured.read} read</span></div>
+        <button class="btn btn-accent" style="margin-top:16px">Read Story →</button>
+      </div>
+    </div>` : "";
+
+  document.getElementById("storiesGrid").innerHTML = rest.map(s=>`
+    <article class="card story-card" data-reveal onclick="openStory(${s.id})">
+      <div class="card-img" style="background:${s.grad}"></div>
+      <span class="badge ${s.cat==='Career'||s.cat==='Arts'?'accent':'success'}">${s.cat}</span>
+      <h3>${s.title}</h3>
+      <p>${s.excerpt}</p>
+      <div class="meta"><span>${s.author}</span><span>${s.date}</span><span>${s.read} read</span></div>
+      <div style="margin-top:12px;color:var(--accent);font-weight:600">Read Story →</div>
+    </article>`).join("") || `<p style="grid-column:1/-1;text-align:center;color:var(--text-soft);padding:40px">No stories found.</p>`;
+
+  document.querySelectorAll("[data-reveal]").forEach(el=>el.classList.add("visible"));
+}
+
+function openStory(id){
+  const s = STORIES.find(x=>x.id===id); if(!s) return;
+  const related = STORIES.filter(x=>x.id!==id).slice(0,3);
+  openModal(`
+    <div style="aspect-ratio:16/8;border-radius:10px;background:${s.grad};margin-bottom:18px"></div>
+    <span class="badge ${s.cat==='Career'||s.cat==='Arts'?'accent':'success'}">${s.cat}</span>
+    <h2 style="margin:10px 0;font-family:'Playfair Display',serif">${s.title}</h2>
+    <div style="color:var(--text-soft);font-size:.9rem;margin-bottom:18px">${s.author} · ${s.date} · ${s.read} read</div>
+    <div style="line-height:1.75;color:var(--text)">
+      <p>${s.excerpt}</p>
+      <p style="margin-top:12px">When the program first reached our neighborhood, no one believed it would last. Today, three years on, the same room that used to be empty after school is the loudest place in the colony — full of laughter, questions, and that wonderful sound of a child suddenly understanding something for the first time.</p>
+      <p style="margin-top:12px">There were setbacks, of course. There always are. Notebooks ran out. The internet went down for weeks. Some parents asked us to stop "filling their child's head" with ideas. We listened. We adapted. We kept showing up.</p>
+      <p style="margin-top:12px">The breakthrough wasn't a moment — it was a thousand small moments stitched together. A first essay finished. A first computer logged in to. A first college form filled. A first interview cleared.</p>
+      <p style="margin-top:12px">Today, the story you've just read isn't extraordinary anymore. It's becoming the new normal. And that, perhaps, is the most beautiful thing of all.</p>
+    </div>
+    <div class="card" style="margin-top:18px;background:linear-gradient(135deg,#1565c0,#e65100);color:#fff;border:none">
+      <h4>🏆 Achievement Highlight</h4>
+      <p style="margin-top:6px;opacity:.95">Selected among India's Top 100 Youth Changemakers 2025.</p>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:18px;flex-wrap:wrap">
+      <button class="btn btn-outline" onclick="shareTo('whatsapp','${s.title.replace(/'/g,"")}')">📲 WhatsApp</button>
+      <button class="btn btn-outline" onclick="shareTo('linkedin','${s.title.replace(/'/g,"")}')">in LinkedIn</button>
+      <button class="btn btn-outline" onclick="copyLink()">🔗 Copy Link</button>
+    </div>
+    <h4 style="margin-top:26px;margin-bottom:12px">Related stories</h4>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+      ${related.map(r=>`<div class="card" style="padding:10px;cursor:pointer" onclick="closeModal();setTimeout(()=>openStory(${r.id}),200)">
+        <div style="aspect-ratio:16/10;border-radius:6px;background:${r.grad};margin-bottom:8px"></div>
+        <div style="font-size:.85rem;font-weight:600">${r.title}</div>
+      </div>`).join("")}
+    </div>
+  `);
+}
+function shareTo(net,title){
+  const url = encodeURIComponent(location.href);
+  const t = encodeURIComponent(title+" — NayePankh");
+  const map = {
+    whatsapp:`https://wa.me/?text=${t}%20${url}`,
+    linkedin:`https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+  };
+  window.open(map[net],"_blank");
+}
+function copyLink(){
+  navigator.clipboard.writeText(location.href).then(()=>showToast("Link copied!"));
+}
+
+function pageInit(){
+  document.querySelectorAll("#storyFilters .chip").forEach(b=>{
+    b.addEventListener("click",()=>{
+      document.querySelectorAll("#storyFilters .chip").forEach(x=>x.classList.remove("active"));
+      b.classList.add("active"); cat=b.dataset.cat; render();
+    });
+  });
+  let t; document.getElementById("storySearch").addEventListener("input",e=>{
+    clearTimeout(t); t=setTimeout(()=>{ q=e.target.value; render(); },300);
+  });
+  render();
+}
+</script>
+</body>
+</html>
