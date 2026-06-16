@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NayePankh Foundation — Giving Wings to Dreams</title>
+<meta name="description" content="NayePankh Foundation empowers underprivileged youth across India through education, skills and opportunity." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="nav-host"></div>
+<main style="padding-top:0">
+
+  <section class="hero">
+    <span class="paper-plane">✈️</span>
+    <span class="paper-plane">✈️</span>
+    <span class="paper-plane">✈️</span>
+    <span class="paper-plane">✈️</span>
+    <span class="paper-plane">✈️</span>
+    <div class="container" style="position:relative;z-index:2">
+      <h1>Giving Wings</h1>
+      <h2>to Dreams</h2>
+      <p>We empower underprivileged youth across India through education, mentorship, and opportunity — because every dream deserves a chance to fly.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-accent" href="volunteer.html">Volunteer Now</a>
+        <button class="btn btn-light" onclick="openStoryVideo()">▶ Watch Our Story</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="container stats-grid">
+      <div data-reveal><div class="stat-num" data-count="10000" data-suffix="+">0</div><div class="stat-label">Youth Empowered</div></div>
+      <div data-reveal><div class="stat-num" data-count="50" data-suffix="+">0</div><div class="stat-label">Partner Schools</div></div>
+      <div data-reveal><div class="stat-num" data-count="500" data-suffix="+">0</div><div class="stat-label">Volunteers</div></div>
+      <div data-reveal><div class="stat-num" data-count="15" data-suffix="+">0</div><div class="stat-label">Cities</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow" data-reveal>What we do</span>
+      <h2 class="section-title" data-reveal>Featured Programs</h2>
+      <p class="section-sub" data-reveal>From classrooms to coding labs, we meet youth where they are.</p>
+      <div class="cards-grid scroll-snap">
+        <div class="card" data-reveal><div class="card-img"></div><span class="badge">Education</span><h3>📚 Academic Support</h3><p>After-school tuition, mentorship and exam prep for students from low-income families.</p></div>
+        <div class="card" data-reveal><div class="card-img" style="background:linear-gradient(135deg,#6a1b9a,#1565c0)"></div><span class="badge accent">Digital</span><h3>💻 Digital Literacy</h3><p>Computer fundamentals, coding and online safety — for the next generation of innovators.</p></div>
+        <div class="card" data-reveal><div class="card-img" style="background:linear-gradient(135deg,#2e7d32,#e65100)"></div><span class="badge success">Career</span><h3>🌱 Career Mentorship</h3><p>1-on-1 mentorship with industry professionals to map a path beyond school.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--bg-alt)">
+    <div class="container">
+      <span class="eyebrow" data-reveal>Stories of change</span>
+      <h2 class="section-title" data-reveal>Latest Stories</h2>
+      <div class="cards-grid">
+        <article class="card" data-reveal><div class="card-img"></div><span class="badge">Education</span><h3>From Slum to Scholarship</h3><p>How Priya turned a borrowed textbook into a national scholarship.</p><div class="meta"><span>5 min read</span><span>Jun 2026</span></div></article>
+        <article class="card" data-reveal><div class="card-img" style="background:linear-gradient(135deg,#e65100,#c62828)"></div><span class="badge accent">Career</span><h3>India's First Coder in His Village</h3><p>Arjun built an app that helps farmers track monsoons.</p><div class="meta"><span>4 min read</span><span>May 2026</span></div></article>
+        <article class="card" data-reveal><div class="card-img" style="background:linear-gradient(135deg,#ad1457,#6a1b9a)"></div><span class="badge success">Women</span><h3>The Painter of Pune</h3><p>Meera's art now hangs in three galleries — and started a workshop for 40 girls.</p><div class="meta"><span>6 min read</span><span>Apr 2026</span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="marquee" aria-label="Our partners">
+    <div class="marquee-track">
+      <span>🤝 TCS Foundation</span><span>🤝 Infosys Springboard</span><span>🤝 Tata Trusts</span>
+      <span>🤝 Wipro Cares</span><span>🤝 Reliance Foundation</span><span>🤝 Azim Premji Foundation</span>
+      <span>🤝 TCS Foundation</span><span>🤝 Infosys Springboard</span><span>🤝 Tata Trusts</span>
+      <span>🤝 Wipro Cares</span><span>🤝 Reliance Foundation</span><span>🤝 Azim Premji Foundation</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container dual-cta">
+      <div class="cta-card blue" data-reveal>
+        <h3>Volunteer with us</h3><p>Give a few hours a week. Change a life forever.</p>
+        <a class="btn btn-light" href="volunteer.html">Join the Team</a>
+      </div>
+      <div class="cta-card orange" data-reveal>
+        <h3>Donate today</h3><p>₹500 funds a month of after-school tuition for a child.</p>
+        <button class="btn btn-light" onclick="openDonateModal()">Donate Now</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+<div id="footer-host"></div>
+<script src="main.js"></script>
+<script>
+function openStoryVideo(){
+  openModal(`<h3>Our Story</h3>
+    <div style="aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#000">
+      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Our Story" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <p style="margin-top:14px;color:var(--text-soft)">A short film about the youth, mentors and dreams behind NayePankh.</p>`);
+}
+</script>
+</body>
+</html>
